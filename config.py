@@ -15,20 +15,26 @@ from calibre.utils.config import config_dir
 
 prefs = JSONConfig('plugins/cloud_sync')
 prefs.defaults['username'] = 'username'
-prefs.defaults['url'] = 'https://webdav.yandex.com.tr'
 prefs.defaults['password'] = 'password'
 prefs.defaults['librarypath'] = ''
+prefs.defaults['language'] = ''
 
 # Set defaults
+language = 'Default'
 books_path = config_dir + '/global.py'
 myFile = open(books_path)
 book_path = myFile.readlines()
 for i in book_path:
-    if re.search('library_path',i):
+    if re.search('library_path', i):
         file_path = i
+    elif re.search('language =', i):
+    	language = i
 myFile.close()
 file_path = file_path.split("u'")
 file_path = file_path[1][0:len(file_path)-4]
+language = language.split(" '")
+language = language[1][0:2]
+prefs.defaults['language'] = language
 prefs.defaults['librarypath'] = file_path
 
 
