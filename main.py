@@ -35,11 +35,6 @@ class DemoDialog(QDialog):
         self.do_user_config = do_user_config
         self.db = gui.current_db
 
-        
-
-    
-    
-
 
 class YandexMainWindowForm(QDialog,YandexMainWindow):
 
@@ -47,8 +42,10 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.setWindowFlags(Qt.Window)
-        self.uploadButton.clicked.connect(self.pull)
-        self.uploadButton.clicked.connect(self.push)
+        self.downloadButton.clicked.connect(self.download)
+        self.uploadButton.clicked.connect(self.upload)
+        self.pushButton.clicked.connect(self.push)
+        self.pullButton.clicked.connect(self.pull)
 
     def save(self):
         prefs['password'] = self.getPassword.text()
@@ -72,17 +69,26 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         if (client.check('Calibre') == False):
             client.mkdir('Calibre')
 
-        if(choice == "pull"):        
-            #download missing file
-            #client.download_async(**kwargs)            
-            #client.pull(remote_directory="calibre", local_directory=prefs['librarypath'])
+        if(choice == "download"):        
             client.download_sync(remote_path="Calibre", local_path=prefs['librarypath'])
-
+        elif(choice == "upload"):
+            client.upload_sync(remote_path="Calibre", local_path=prefs['librarypath'])    
+        elif(choice == "pull"):
+            client.pull(remote_directory="Calibre", local_directory=prefs['librarypath'])
+        elif(choice == "push"):
+            client.push(remote_directory="Calibre", local_directory=prefs['librarypath'])
         else:
-            client.upload_sync(remote_path="Calibre", local_path=prefs['librarypath'])            
-            #upload missing file
-            #client.push(remote_directory="calibre", local_directory=prefs['librarypath'])
-            #client.upload_async(**kwargs)
+            return 1
+
+    def download(self):
+        self.save()
+        self.yandexDisk("download")
+        return 1
+
+    def upload(self):
+        self.save()
+        self.yandexDisk("upload")
+        return 1
 
     def pull(self):
         self.save()
@@ -103,6 +109,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         self.setupUi(self)
         self.setWindowFlags(Qt.Window)
         self.googleAuthButton.clicked.connect(self.googleAuth)
+        self.googleDeauthButton.clicked.connect(self.googleDeAuth)
         self.uploadButton.clicked.connect(self.doGoogleUpload)
         self.downloadButton.clicked.connect(self.doGoogleDownload)
 
