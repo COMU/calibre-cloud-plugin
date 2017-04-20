@@ -4,16 +4,21 @@ from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
 
 __license__   = 'GPL v3'
-__copyright__ = '2017, Kerim Ölçer <kerimlcr@gmail.com>, Ali Güven Odabaşıoğlu <agaodabasioglu@gmail.com'
+__copyright__ = '2017, Kerim Ölçer <kerimlcr@gmail.com>, Ali Güven Odabaşıoğlu <agaodabasioglu@gmail.com>'
 __docformat__ = 'restructuredtext en'
 
 from calibre.customize import InterfaceActionBase
+
+try:
+    load_translations()
+except NameError:
+    pass # load_translations() added in calibre 1.9
 
 class CloudSync(InterfaceActionBase):
 
     name                = 'Cloud Sync'
     description         = 'Cloud Sync'
-    supported_platforms = ['windows', 'osx', 'linux']
+    supported_platforms = ['linux']
     author              = 'Kerim Ölçer, Ali Güven Odabaşıoğlu'
     version             = (0, 0, 1)
     minimum_calibre_version = (0, 7, 53)

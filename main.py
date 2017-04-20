@@ -4,28 +4,34 @@ from __future__ import (unicode_literals, division, absolute_import,
                         print_function)
 
 __license__   = 'GPL v3'
-__copyright__ = '2017, Kerim Ölçer <kerimlcr@gmail.com>, Ali Güven Odabaşıoğlu <agaodabasioglu@gmail.com'
+__copyright__ = '2017, Kerim Ölçer <kerimlcr@gmail.com>, Ali Güven Odabaşıoğlu <agaodabasioglu@gmail.com>'
 __docformat__ = 'restructuredtext en'
 
 if False:
     get_icons = get_resources = None
 
-from pydrive.auth import GoogleAuth
-from pydrive.drive import GoogleDrive
+#Another import
+import os, re, sys
 from PyQt5.Qt import QDialog, QVBoxLayout, QPushButton, QMessageBox, QLabel, QLineEdit
 from PyQt5.QtWidgets import QWidget, QDesktopWidget
 from PyQt5.QtCore import Qt
 
-import os, re, sys, httplib2
+from pydrive.auth import GoogleAuth
+from pydrive.drive import GoogleDrive
 import webdav.client as wc
 
+#Calibre config files import
 from calibre_plugins.cloud_sync.config import prefs
 from calibre.utils.config import config_dir
-
+#Gui import
 from calibre_plugins.cloud_sync.gui.MainWindow import Ui_Form as MainWindow
 from calibre_plugins.cloud_sync.gui.yandex import Ui_Dialog as YandexMainWindow
 from calibre_plugins.cloud_sync.gui.google import Ui_Dialog as GoogleMainWindow
 
+try:
+    load_translations()
+except NameError:
+    pass # load_translations() added in calibre 1.9
 
 class DemoDialog(QDialog):
 
@@ -42,6 +48,9 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.setWindowFlags(Qt.Window)
+        self.getUsername.setText(prefs['username'])
+        self.getPassword.setEchoMode(QLineEdit.Password)
+        self.getPassword.setText(prefs['password'])
         self.downloadButton.clicked.connect(self.download)
         self.uploadButton.clicked.connect(self.upload)
         self.pushButton.clicked.connect(self.push)
@@ -63,20 +72,33 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         client = wc.Client(options)
 
         if (client.check() == False):
-            QMessageBox.information(self, "Error", "Giriş bilgileri yanlış!")            
+            QMessageBox.information(self, "Error", _("Login information is incorrect!"))            
             return 1
 
-        if (client.check('Calibre') == False):
-            client.mkdir('Calibre')
-
-        if(choice == "download"):        
-            client.download_sync(remote_path="Calibre", local_path=prefs['librarypath'])
+        if(choice == "download"):
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
+                QMessageBox.information(self, "Error", _("It was created because there is no Calibre file in Drive, download could not be done."))
+            else:
+                client.download_sync(remote_path="Calibre", local_path=prefs['librarypath'])
+                QMessageBox.information(self, "Error", _("Download complete."))
         elif(choice == "upload"):
-            client.upload_sync(remote_path="Calibre", local_path=prefs['librarypath'])    
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
+            client.upload_sync(remote_path="Calibre", local_path=prefs['librarypath'])
+            QMessageBox.information(self, "Error", _("Upload complete."))
         elif(choice == "pull"):
-            client.pull(remote_directory="Calibre", local_directory=prefs['librarypath'])
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
+                QMessageBox.information(self, "Error", _("It was created because there is no Calibre file in Drive, pull could not be done."))
+            else:
+                client.pull(remote_directory="Calibre", local_directory=prefs['librarypath'])
+                QMessageBox.information(self, "Error", _("Pull complete."))
         elif(choice == "push"):
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
             client.push(remote_directory="Calibre", local_directory=prefs['librarypath'])
+            QMessageBox.information(self, "Error", _("Push complete."))
         else:
             return 1
 
@@ -99,7 +121,6 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         self.save()
         self.yandexDisk("push")
         return 1
-#------------------
     
 
 class GoogleMainWindowForm(QDialog,GoogleMainWindow):
@@ -210,28 +231,19 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         path=prefs['librarypath']
         path=path+"/"
         self.uploadFolderToFolder(path,"Calibre")
-        print('Upload bitti')
+        QMessageBox.information(self, "Error", _("Upload complete."))
 
     def doGoogleDownload(self):
-        path=prefs['librarypath']
-        path=path+"/"
-        self.downloadFolderToFolder(path,"Calibre")
-        print('Download bitti')
+        try:    
+            path=prefs['librarypath']
+            path=path+"/"
+            self.downloadFolderToFolder(path,"Calibre")
+            QMessageBox.information(self, "Error", _("Download complete."))
+        except:
+            QMessageBox.information(self, "Error", _("Calibre file does not exist on your Drive!"))  
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#MainWindow 
 class MainWindowForm(QWidget,MainWindow):
 
     def __init__(self, parent=None):
