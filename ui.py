@@ -12,9 +12,10 @@ if False:
 
 # The class that all interface action plugins must inherit from
 from calibre.gui2.actions import InterfaceAction
-from calibre_plugins.cloud_sync.main import DemoDialog, MainWindowForm
-
-
+try:
+    from calibre_plugins.cloud_sync.main import DemoDialog, MainWindowForm
+except:
+    from calibre_plugins.cloud_sync.emain import DemoDialog, MainWindowForm
 
 class InterfacePlugin(InterfaceAction):
 
@@ -30,12 +31,7 @@ class InterfacePlugin(InterfaceAction):
     def show_dialog(self):
         self.mainwindow=MainWindowForm()
         self.mainwindow.show()
-        """
-        base_plugin_object = self.interface_action_base_plugin
-        do_user_config = base_plugin_object.do_user_config
-        d = DemoDialog(self.gui, self.qaction.icon(), do_user_config)
-        d.show()
-        """
+
 
     def apply_settings(self):
         from calibre_plugins.cloud_sync.config import prefs

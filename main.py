@@ -27,6 +27,7 @@ from calibre.utils.config import config_dir
 from calibre_plugins.cloud_sync.gui.MainWindow import Ui_Form as MainWindow
 from calibre_plugins.cloud_sync.gui.yandex import Ui_Dialog as YandexMainWindow
 from calibre_plugins.cloud_sync.gui.google import Ui_Dialog as GoogleMainWindow
+from calibre_plugins.cloud_sync.gui.error import Ui_Dialog as ErrorMainWindow
 
 try:
     load_translations()
@@ -244,7 +245,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
 
 
 #MainWindow 
-class MainWindowForm(QWidget,MainWindow):
+class MainWindowForm(QWidget, MainWindow):
 
     def __init__(self, parent=None):
         QWidget.__init__(self, parent)
@@ -253,6 +254,7 @@ class MainWindowForm(QWidget,MainWindow):
         self.move(QDesktopWidget().availableGeometry().center() - self.frameGeometry().center())
         self.yandexButton.clicked.connect(self.yandex_dialog)
         self.googleButton.clicked.connect(self.google_dialog)
+        
 
     def yandex_dialog(self):
         self.yandexMainWindow = YandexMainWindowForm()
@@ -265,5 +267,3 @@ class MainWindowForm(QWidget,MainWindow):
         self.hide()
         self.googleMainWindow.exec_()
         self.show()
-
-    
