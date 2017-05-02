@@ -171,6 +171,9 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         for files in file_list:
             if(fname==files['title']):
                 return 1
+            elif (files['mimeType'] == 'application/vnd.google-apps.folder'):
+                if(is_Exist(files['id'],fname) == 1):
+				    return 1
 
     def uploadFolderToFolder(self,path,foldname,up='root'):
         drive = self.googleAuth()
