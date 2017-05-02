@@ -264,14 +264,14 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         QMessageBox.information(self, "Error", _("Upload complete."))
 
     def doGoogleDownload(self):
-        #try:    
-        path=prefs['librarypath']
-        path=path+"/"
-        self.downloadFolderToFolder(path,"Calibre")
-        self.downloadDelete(path)
-        QMessageBox.information(self, "Error", _("Download complete."))
-        #except:
-            #QMessageBox.information(self, "Error", _("Calibre file does not exist on your Drive!"))  
+        try:    
+            path=prefs['librarypath']
+            path=path+"/"
+            self.downloadFolderToFolder(path,"Calibre")
+            self.downloadDelete(path)
+            QMessageBox.information(self, "Plugin", _("Download complete."))
+        except:
+            QMessageBox.information(self, "Error", _("Calibre file does not exist on your Drive!"))  
 
 
 #MainWindow 
