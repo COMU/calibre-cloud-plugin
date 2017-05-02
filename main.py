@@ -157,11 +157,13 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         file_list = drive.ListFile({'q': "title='{}' and mimeType contains 'application/vnd.google-apps.folder' and trashed=false".format(fldname)}).GetList()
         return file_list
 
-    def isExistLocal(self,path,tittle):
-        for locfname in os.listdir(path):
-            if (locfname==tittle):
-                return 1
-
+    def is_ExistLocal(self,path,title):
+	    for locfname in os.listdir(path):
+	    	if (locfname==title):
+	    		return 1
+	    	elif(os.path.isdir(path+locfname)):
+                self.is_ExistLocal(path+locfname+"/",title)
+    
     def isExist(self,folderid,fname):
         drive = self.googleAuth()
         file_list = drive.ListFile({'q': "'"+str(folderid)+"'"+" in parents and trashed=false"}).GetList()
@@ -204,10 +206,10 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
 		    for files in file_list:
 		    	if (files['mimeType'] == 'application/vnd.google-apps.folder'):
 		    		pathway=localpath+files['title']+"/"
-		    		if(self.isExistLocal(localpath,files['title']) != 1):
+		    		if(self.is_ExistLocal(localpath,files['title']) != 1):
 		    			os.makedirs(pathway)
 		    		self.downloadFolderToFolder(pathway,files['title'])
-		    	elif (self.isExistLocal(localpath,files['title']) != 1):
+		    	elif (self.is_ExistLocal(localpath,files['title']) != 1):
 		    		fileid=files['id']
 		    		file1 = drive.CreateFile({'id': fileid})
 		    		file1.GetContentFile(localpath+files['title'])
@@ -218,7 +220,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         file_list = drive.ListFile({'q': "'"+str(folderid)+"'"+" in parents and trashed=false"}).GetList()
         if folderid is not None:
             for files in file_list:
-                if (self.isExistLocal(localpath,files['title']) != 1):
+                if (self.is_ExistLocal(localpath,files['title']) != 1):
                     fileid=files['id']
                     file1 = drive.CreateFile({'id': fileid})
                     file1.GetContentFile(localpath+files['title'])
