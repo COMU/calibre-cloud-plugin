@@ -162,7 +162,8 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
 	    	if (locfname==title):
 	    		return 1
 	    	elif(os.path.isdir(path+locfname)):
-                self.is_ExistLocal(path+locfname+"/",title)
+                if(self.is_ExistLocal(path+locfname+"/",title)==1):
+                    return 1
     
     def isExist(self,folderid,fname):
         drive = self.googleAuth()
@@ -193,6 +194,18 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
 		    		f.SetContentFile(path+files)
 		    		f.Upload()
 		    		print('title: %s, mimeType: %s' % (f['title'], f['mimeType']))
+    
+    def uploadDelete(self,localpath,foldname):
+        drive = self.googleAuth()
+	    foldcheck = self.find_folders(foldname)
+	    folderid=foldcheck[0]['id']
+	    file_list = drive.ListFile({'q': "'"+str(folderid)+"'"+" in parents and trashed=false"}).GetList()
+	    for files in file_list:
+		    if (files['mimeType'] == 'application/vnd.google-apps.folder'):
+		    	self.uploadDelete(localpath,files['title'])
+		    if (self.is_ExistLocal(localpath,files['title']) != 1):
+		    	print(files['title'])
+		    	files.Delete()
 
     def downloadFolderToFolder(self,localpath,foldname):
         drive = self.googleAuth()
@@ -234,6 +247,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         path=prefs['librarypath']
         path=path+"/"
         self.uploadFolderToFolder(path,"Calibre")
+        self.uploadDelete(path,"Calibre")
         QMessageBox.information(self, "Error", _("Upload complete."))
 
     def doGoogleDownload(self):
