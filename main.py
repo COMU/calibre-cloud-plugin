@@ -172,7 +172,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
             if(fname==files['title']):
                 return 1
             elif (files['mimeType'] == 'application/vnd.google-apps.folder'):
-                if(is_Exist(files['id'],fname) == 1):
+                if(self.isExist(files['id'],fname) == 1):
 				    return 1
 
     def uploadFolderToFolder(self,path,foldname,up='root'):
@@ -229,6 +229,16 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
 		    		fileid=files['id']
 		    		file1 = drive.CreateFile({'id': fileid})
 		    		file1.GetContentFile(localpath+files['title'])
+    def downloadDelete(self,path):
+        drive = self.googleAuth()
+	    foldcheck = self.find_folders("Calibre")
+	    folderid=foldcheck[0]['id']
+	    for locfname in os.listdir(path):
+		    if (os.path.isdir(path+locfname)):
+		    	self.downloadDelete(path+locfname+"/")
+		    if(self.isExist(folderid,locfname) != 1):
+			    print(path+locfname)
+			    os.remove(path+locfname)
 
     def downloadFolderToFolders(self,localpath):
         drive = self.googleAuth()
@@ -254,13 +264,14 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         QMessageBox.information(self, "Error", _("Upload complete."))
 
     def doGoogleDownload(self):
-        try:    
-            path=prefs['librarypath']
-            path=path+"/"
-            self.downloadFolderToFolder(path,"Calibre")
-            QMessageBox.information(self, "Error", _("Download complete."))
-        except:
-            QMessageBox.information(self, "Error", _("Calibre file does not exist on your Drive!"))  
+        #try:    
+        path=prefs['librarypath']
+        path=path+"/"
+        self.downloadFolderToFolder(path,"Calibre")
+        self.downloadDelete(path)
+        QMessageBox.information(self, "Error", _("Download complete."))
+        #except:
+            #QMessageBox.information(self, "Error", _("Calibre file does not exist on your Drive!"))  
 
 
 #MainWindow 
