@@ -73,33 +73,33 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         client = wc.Client(options)
 
         if (client.check() == False):
-            QMessageBox.information(self, "Error", _("Login information is incorrect!"))            
+            QMessageBox.information(self, "Info", _("Login information is incorrect!"))
             return 1
 
         if(choice == "download"):
             if (client.check('Calibre') == False):
                 client.mkdir('Calibre')
-                QMessageBox.information(self, "Error", _("It was created because there is no Calibre file in Drive, download could not be done."))
+                QMessageBox.information(self, "Info", _("It was created because there is no Calibre file in Drive, download could not be done."))
             else:
                 client.download_sync(remote_path="Calibre", local_path=prefs['librarypath'])
-                QMessageBox.information(self, "Error", _("Download complete."))
+                QMessageBox.information(self, "Info", _("Download complete."))
         elif(choice == "upload"):
             if (client.check('Calibre') == False):
                 client.mkdir('Calibre')
             client.upload_sync(remote_path="Calibre", local_path=prefs['librarypath'])
-            QMessageBox.information(self, "Error", _("Upload complete."))
+            QMessageBox.information(self, "Info", _("Upload complete."))
         elif(choice == "pull"):
             if (client.check('Calibre') == False):
                 client.mkdir('Calibre')
-                QMessageBox.information(self, "Error", _("It was created because there is no Calibre file in Drive, pull could not be done."))
+                QMessageBox.information(self, "Info", _("It was created because there is no Calibre file in Drive, pull could not be done."))
             else:
                 client.pull(remote_directory="Calibre", local_directory=prefs['librarypath'])
-                QMessageBox.information(self, "Error", _("Pull complete."))
+                QMessageBox.information(self, "Info", _("Pull complete."))
         elif(choice == "push"):
             if (client.check('Calibre') == False):
                 client.mkdir('Calibre')
             client.push(remote_directory="Calibre", local_directory=prefs['librarypath'])
-            QMessageBox.information(self, "Error", _("Push complete."))
+            QMessageBox.information(self, "Info", _("Push complete."))
         else:
             return 1
 
@@ -151,6 +151,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         gauth.LoadCredentialsFile(credential_path)
         if gauth.credentials is None:
             gauth.LocalWebserverAuth()
+
         elif gauth.access_token_expired:
             gauth.Refresh()
         else:
@@ -262,14 +263,14 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         home_dir = os.path.expanduser('~')
         credential_dir = os.path.join(home_dir, '.credentials')
         os.remove(credential_dir+'/drive-calibre.json')
-        QMessageBox.information(self, "Error", _("Deauth successful."))
+        QMessageBox.information(self, "Info", _("Deauth successful."))
     
     def doGoogleUpload(self):
         path=prefs['librarypath']
         path=path+"/"
         self.uploadFolderToFolder(path,"Calibre")
         self.uploadDelete(path,"Calibre")
-        QMessageBox.information(self, "Error", _("Upload complete."))
+        QMessageBox.information(self, "Info", _("Upload complete."))
 
     def doGoogleDownload(self):
         try:    
@@ -277,9 +278,9 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
             path=path+"/"
             self.downloadFolderToFolder(path,"Calibre")
             self.downloadDelete(path)
-            QMessageBox.information(self, "Plugin", _("Download complete."))
+            QMessageBox.information(self, "Info", _("Download complete."))
         except:
-            QMessageBox.information(self, "Error", _("Calibre file does not exist on your Drive!"))  
+            QMessageBox.information(self, "Info", _("Calibre file does not exist on your Drive!"))
 
 
 #MainWindow 
@@ -292,7 +293,6 @@ class MainWindowForm(QWidget, MainWindow):
         self.move(QDesktopWidget().availableGeometry().center() - self.frameGeometry().center())
         self.yandexButton.clicked.connect(self.yandex_dialog)
         self.googleButton.clicked.connect(self.google_dialog)
-        
 
     def yandex_dialog(self):
         self.yandexMainWindow = YandexMainWindowForm()
