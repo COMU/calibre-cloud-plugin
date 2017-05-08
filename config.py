@@ -16,7 +16,6 @@ prefs = JSONConfig('plugins/cloud_sync')
 prefs.defaults['username'] = 'username'
 prefs.defaults['password'] = 'password'
 prefs.defaults['librarypath'] = ''
-prefs.defaults['gauth'] = '0'
 
 # Set defaults
 books_path = config_dir + '/global.py'
