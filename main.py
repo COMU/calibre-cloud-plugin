@@ -11,7 +11,7 @@ if False:
     get_icons = get_resources = None
 
 #Another import
-import os, re, sys
+import os, re, sys, getpass
 from PyQt5.Qt import QDialog, QVBoxLayout, QPushButton, QMessageBox, QLabel, QLineEdit
 from PyQt5.QtWidgets import QWidget, QDesktopWidget
 from PyQt5.QtCore import Qt
@@ -133,10 +133,9 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         self.googleDeauthButton.clicked.connect(self.googleDeAuth)
         self.uploadButton.clicked.connect(self.doGoogleUpload)
         self.downloadButton.clicked.connect(self.doGoogleDownload)
-        auth = '0'
-        auth = prefs['gauth']
-        print (auth)
-        if (auth == '0'):
+        username = getpass.getuser()
+        if_exits = os.path.exists('/home/%s/.credentials/drive-calibre.json'%(username))
+        if (if_exits == False):
             self.googleAuthButton.clicked.connect(self.googleAuth)
         else:
             self.googleAuthButton.hide()
@@ -157,7 +156,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         else:
             gauth.Authorize()
         gauth.SaveCredentialsFile(credential_path)
-        prefs['gauth'] = '1'
+        QMessageBox.information(self, "Info", _("Auth successful."))
         return GoogleDrive(gauth)
 
     def find_folders(self,fldname):
@@ -263,6 +262,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         home_dir = os.path.expanduser('~')
         credential_dir = os.path.join(home_dir, '.credentials')
         os.remove(credential_dir+'/drive-calibre.json')
+        QMessageBox.information(self, "Error", _("Deauth successful."))
     
     def doGoogleUpload(self):
         path=prefs['librarypath']
