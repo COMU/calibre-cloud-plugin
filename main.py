@@ -130,10 +130,17 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.setWindowFlags(Qt.Window)
-        self.googleAuthButton.clicked.connect(self.googleAuth)
         self.googleDeauthButton.clicked.connect(self.googleDeAuth)
         self.uploadButton.clicked.connect(self.doGoogleUpload)
         self.downloadButton.clicked.connect(self.doGoogleDownload)
+        auth = '0'
+        auth = prefs['gauth']
+        print (auth)
+        if (auth == '0'):
+            self.googleAuthButton.clicked.connect(self.googleAuth)
+        else:
+            self.googleAuthButton.hide()
+
 
     def googleAuth(self):
         gauth = GoogleAuth()
@@ -150,6 +157,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
         else:
             gauth.Authorize()
         gauth.SaveCredentialsFile(credential_path)
+        prefs['gauth'] = '1'
         return GoogleDrive(gauth)
 
     def find_folders(self,fldname):
