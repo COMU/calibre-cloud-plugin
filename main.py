@@ -139,6 +139,8 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
             self.googleAuthButton.clicked.connect(self.googleAuth)
         else:
             self.googleAuthButton.hide()
+            self.googleDeauthButton.setGeometry(30, 20, 99, 71)
+            self.googleDeauthButton.resize(240,70)
 
 
     def googleAuth(self):
