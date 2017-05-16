@@ -49,17 +49,36 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.setWindowFlags(Qt.Window)
-        self.getUsername.setText(prefs['username'])
-        self.getPassword.setEchoMode(QLineEdit.Password)
-        self.getPassword.setText(prefs['password'])
+        if (prefs['yy'] == '1'):
+            self.getUsername.hide()
+            self.getPassword.hide()
+            self.label_2.hide()
+            self.logout_button.clicked.connect(self.logout)
+            self.label.setText("Now Session : " + prefs['username'])
+        if (prefs['yy'] == '0'):
+            self.logout_button.hide()
+            self.getUsername.show()
+            self.getPassword.show()
+            self.label_2.show()
+            self.getUsername.setText(prefs['username'])
+            self.getPassword.setEchoMode(QLineEdit.Password)
+            self.getPassword.setText(prefs['password'])
         self.downloadButton.clicked.connect(self.download)
         self.uploadButton.clicked.connect(self.upload)
         self.pushButton.clicked.connect(self.push)
         self.pullButton.clicked.connect(self.pull)
 
+    def logout(self):
+        prefs['username'] = 'username'
+        prefs['password'] = 'password'
+        prefs['yy'] = '0'
+        QMessageBox.information(self, "Info", _("Logout successful"))
+        return  1
+
     def save(self):
         prefs['password'] = self.getPassword.text()
         prefs['username'] = self.getUsername.text()
+        prefs['yy'] = '1'
         return 1
 
     def yandexDisk(self, choice):
