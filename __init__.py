@@ -20,7 +20,7 @@ class CloudSync(InterfaceActionBase):
     description         = 'Cloud Sync'
     supported_platforms = ['linux']
     author              = 'Kerim Ölçer, Ali Güven Odabaşıoğlu'
-    version             = (0, 0, 1)
+    version             = (0, 0, 2)
     minimum_calibre_version = (0, 7, 53)
 
 
