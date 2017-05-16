@@ -1,0 +1,5 @@
+client_config_backend: 'file'
+client_config_file: 'settings/client_secrets.json'
+
+oauth_scope:
+  - 'https://www.googleapis.com/auth/drive'

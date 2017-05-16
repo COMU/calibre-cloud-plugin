@@ -161,11 +161,27 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
             self.googleDeauthButton.setGeometry(30, 20, 99, 71)
             self.googleDeauthButton.resize(240,70)
 
-
-    def googleAuth(self):
-        gauth = GoogleAuth()
+    def credSettings(self):
+        
         home_dir = os.path.expanduser('~')
         credential_dir = os.path.join(home_dir, '.credentials')
+        credential_json = os.path.join(credential_dir,'client_secrets.json')
+        credential_settings = os.path.join(credential_dir,'settings.yaml')
+        if not os.path.exists(credential_json):
+            file1=open(credential_json,'w')
+            file1.write('{"installed":{"client_id":"697679503383-ud6kdb3gb2qhj1j4eop77a01qi3kc1en.apps.googleusercontent.com","project_id":"calibre-sync","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://accounts.google.com/o/oauth2/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"2Q9dbumIaW84NWddk9PmmrQN","redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]}}')
+            file1.close()
+        if not os.path.exists(credential_settings):
+            file2=open(credential_settings,'w')
+            file2.write("client_config_file: '/home/omedia/.credentials/client_secrets.json'")
+            file2.close()
+
+    def googleAuth(self):
+        self.credSettings()
+        home_dir = os.path.expanduser('~')
+        credential_dir = os.path.join(home_dir, '.credentials')
+        credential_settings = os.path.join(credential_dir,'settings.yaml')
+        gauth = GoogleAuth(credential_settings)
         if not os.path.exists(credential_dir):
             os.makedirs(credential_dir)
         credential_path = os.path.join(credential_dir,'drive-calibre.json')
