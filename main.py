@@ -173,7 +173,7 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
             file1.close()
         if not os.path.exists(credential_settings):
             file2=open(credential_settings,'w')
-            file2.write("client_config_file: '/home/omedia/.credentials/client_secrets.json'")
+            file2.write("client_config_file: '%s/.credentials/client_secrets.json'"%(home_dir))
             file2.close()
 
     def googleAuth(self):
