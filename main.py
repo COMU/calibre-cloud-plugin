@@ -334,9 +334,9 @@ class AboutMainWindowForm(QDialog,AboutMainWindow):
         self.label_expl.setText(_("Local or server files are synchronized with this plugin."))
         self.label_copy.setText('Copyright © 2017 – Kerim Ölçer\n'
     'Copyright © 2017 – Ali Güven Odabaşıoğlu')
-        self.label_cs.setText(_("This program comes with absolutely no warranty.\n")
-    _("See the GNU General Public License, version 3 or ")
-    _("later for details."))
+        self.label_cs.setText("This program comes with absolutely no warranty.\n"
+    "See the GNU General Public License, version 3 or "
+    "later for details.")
 
 
 #MainWindow
