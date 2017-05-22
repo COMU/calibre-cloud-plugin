@@ -6,6 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__   = 'GPL v3'
 __copyright__ = '2017, Kerim Ölçer <kerimlcr@gmail.com>, Ali Güven Odabaşıoğlu <agaodabasioglu@gmail.com>'
 __docformat__ = 'restructuredtext en'
+__version__   = "0.0.2"
 
 if False:
     get_icons = get_resources = None
@@ -15,6 +16,7 @@ import os, re, sys, getpass
 from PyQt5.Qt import QDialog, QVBoxLayout, QPushButton, QMessageBox, QLabel, QLineEdit
 from PyQt5.QtWidgets import QWidget, QDesktopWidget
 from PyQt5.QtCore import Qt
+from PyQt5 import QtCore, QtGui
 
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
@@ -28,6 +30,7 @@ from calibre_plugins.cloud_sync.gui.MainWindow import Ui_Form as MainWindow
 from calibre_plugins.cloud_sync.gui.yandex import Ui_Dialog as YandexMainWindow
 from calibre_plugins.cloud_sync.gui.google import Ui_Dialog as GoogleMainWindow
 from calibre_plugins.cloud_sync.gui.error import Ui_Dialog as ErrorMainWindow
+from calibre_plugins.cloud_sync.gui.about import Ui_Dialog as AboutMainWindow
 
 try:
     load_translations()
@@ -320,7 +323,23 @@ class GoogleMainWindowForm(QDialog,GoogleMainWindow):
             QMessageBox.information(self, "Info", _("Calibre file does not exist on your Drive!"))
 
 
-#MainWindow 
+class AboutMainWindowForm(QDialog,AboutMainWindow):
+
+    def __init__(self, parent=None):
+        QDialog.__init__(self, parent)
+        self.setupUi(self)
+        self.setWindowFlags(Qt.Window)
+        self.label_appname.setText("Cloud Sync")
+        self.label_version.setText(__version__)
+        self.label_expl.setText("Local or server files are synchronized with this plugin.")
+        self.label_copy.setText('Copyright © 2017 – Kerim Ölçer\n'
+    'Copyright © 2017 – Ali Güven Odabaşıoğlu')
+        self.label_cs.setText("This program comes with absolutely no warranty.\n"
+    "See the GNU General Public License, version 3 or "
+    "later for details.")
+
+
+#MainWindow
 class MainWindowForm(QWidget, MainWindow):
 
     def __init__(self, parent=None):
@@ -328,8 +347,22 @@ class MainWindowForm(QWidget, MainWindow):
         self.setupUi(self)
         self.setWindowFlags(Qt.Window)
         self.move(QDesktopWidget().availableGeometry().center() - self.frameGeometry().center())
-        self.yandexButton.clicked.connect(self.yandex_dialog)
-        self.googleButton.clicked.connect(self.google_dialog)
+        self.label_version.setText(__version__)
+        self.yandex_button.clicked.connect(self.yandex_dialog)
+        self.google_button.clicked.connect(self.google_dialog)
+        self.question_button.clicked.connect(self.about)
+        self.license_button.clicked.connect(self.openUrl)
+
+    def openUrl(self):
+        url = QtCore.QUrl('https://www.gnu.org/licenses/gpl-3.0.html')
+        if not QtGui.QDesktopServices.openUrl(url):
+            QtGui.QMessageBox.warning(self, 'Open Url', 'Could not open url')
+
+    def about(self):
+        self.aboutMainWindow = AboutMainWindowForm()
+        self.hide()
+        self.aboutMainWindow.exec_()
+        self.show()
 
     def yandex_dialog(self):
         self.yandexMainWindow = YandexMainWindowForm()

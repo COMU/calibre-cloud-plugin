@@ -12,10 +12,10 @@ if False:
 
 # The class that all interface action plugins must inherit from
 from calibre.gui2.actions import InterfaceAction
-try:
-    from calibre_plugins.cloud_sync.main import DemoDialog, MainWindowForm
-except:
-    from calibre_plugins.cloud_sync.emain import DemoDialog, MainWindowForm
+#try:
+from calibre_plugins.cloud_sync.main import DemoDialog, MainWindowForm
+#except:
+#    from calibre_plugins.cloud_sync.emain import DemoDialog, MainWindowForm
 
 class InterfacePlugin(InterfaceAction):
 
