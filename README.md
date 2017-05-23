@@ -3,7 +3,7 @@ Calibre plugin for cloud strorages
 
 There are 4 buttons for Yandex.
 
-[*]Dowload(When files deleted on site and local automaticly delete as well ) 
+[*]Dowload(When files deleted on site and local automaticly delete as well ) **[Done]**
 [*]Upload(When files deleted on local and other site automaticly delete as well) 
 [*]Pull(Fetch missing files) 
 [*]Push(Loads missing files)
