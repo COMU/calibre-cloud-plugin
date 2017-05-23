@@ -17,11 +17,11 @@ This plugin has a GoogleDrive support, you can work with that your book's can st
 
 - **Dependency**
 
- * Webdavclient
+* Webdavclient
 
    - $sudo apt-get install libxml2-dev libxslt-dev python-dev 
    - $sudo apt-get install libcurl4-openssl-dev python-pycurl 
    - $pip install webdavclient
 
- * Pydrive 
+* Pydrive 
    - $pip install pydrive
