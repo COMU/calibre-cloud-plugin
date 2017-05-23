@@ -44,6 +44,17 @@ class Ui_Dialog(object):
         self.pushButton.setToolTip("")
         self.pushButton.setIconSize(QtCore.QSize(32, 32))
         self.pushButton.setObjectName("pushButton")
+	self.pushButton_2 = QtWidgets.QPushButton(Dialog)
+        self.pushButton_2.setGeometry(QtCore.QRect(280, 0, 21, 21))
+        self.pushButton_2.setStyleSheet("border-color: black;\n"
+"border-width: 5px;\n"
+"border-radius: 1px;")
+        self.pushButton_2.setText("")
+	icon3 = QtGui.QIcon()
+        icon3.addPixmap(QtGui.QPixmap("Downloads/bs_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.pushButton_2.setIcon(icon3)
+        self.pushButton_2.setIconSize(QtCore.QSize(25, 20))
+        self.pushButton_2.setObjectName("pushButton_2")
         self.logout_button = QtWidgets.QPushButton(Dialog)
         self.logout_button.setGeometry(QtCore.QRect(80, 50, 121, 41))
         self.logout_button.setToolTip("")
@@ -85,6 +96,7 @@ class Ui_Dialog(object):
         self.getUsername.setObjectName("getUsername")
 
         self.retranslateUi(Dialog)
+	self.pushButton_2.clicked.connect(Dialog.close)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):

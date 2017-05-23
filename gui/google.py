@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'google.ui'
 #
-# Created by: PyQt5 UI code generator 5.8.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -22,7 +22,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         Dialog.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../calibreGUi/calibre-cloud-plugin/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("../../media/kerim/TuTRLe/2017ubuntu/calibreGUi/calibre-cloud-plugin/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
         self.uploadButton = QtWidgets.QPushButton(Dialog)
         self.uploadButton.setGeometry(QtCore.QRect(170, 110, 99, 71))
@@ -44,8 +44,20 @@ class Ui_Dialog(object):
         self.googleDeauthButton.setToolTip("")
         self.googleDeauthButton.setIconSize(QtCore.QSize(32, 32))
         self.googleDeauthButton.setObjectName("googleDeauthButton")
+        self.pushButton = QtWidgets.QPushButton(Dialog)
+        self.pushButton.setGeometry(QtCore.QRect(280, 0, 21, 21))
+        self.pushButton.setStyleSheet("border-color: black;\n"
+"border-width: 5px;\n"
+"border-radius: 1px;")
+        self.pushButton.setText("")
+        icon1 = QtGui.QIcon()
+        icon1.addPixmap(QtGui.QPixmap("Downloads/bs_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        self.pushButton.setIcon(icon1)
+        self.pushButton.setIconSize(QtCore.QSize(25, 20))
+        self.pushButton.setObjectName("pushButton")
 
         self.retranslateUi(Dialog)
+        self.pushButton.clicked.connect(Dialog.close)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
@@ -55,4 +67,14 @@ class Ui_Dialog(object):
         self.downloadButton.setText(_translate("Dialog", "Download"))
         self.googleAuthButton.setText(_translate("Dialog", "Auth"))
         self.googleDeauthButton.setText(_translate("Dialog", "Deauth"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    Dialog = QtWidgets.QDialog()
+    ui = Ui_Dialog()
+    ui.setupUi(Dialog)
+    Dialog.show()
+    sys.exit(app.exec_())
 
