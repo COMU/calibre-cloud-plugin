@@ -7,7 +7,8 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-PLUGIN_ICONS = ['../images/icon.png', '../images/yandex_icon.png', '../images/google_icon.png', '../images/license_icon.png', '../images/question_icon.png']
+
+
 class Ui_Form(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -18,7 +19,7 @@ class Ui_Form(object):
         font.setPointSize(12)
         Dialog.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap(PLUGIN_ICONS[0]), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap('images/icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         Dialog.setWindowIcon(icon)
         self.yandex_button = QtWidgets.QPushButton(Dialog)
         self.yandex_button.setGeometry(QtCore.QRect(80, 90, 68, 64))
@@ -27,7 +28,7 @@ class Ui_Form(object):
 "border-radius: 1px;")
         self.yandex_button.setText("")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap(PLUGIN_ICONS[1]), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap('images/yandex_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.yandex_button.setIcon(icon1)
         self.yandex_button.setIconSize(QtCore.QSize(64, 64))
         self.yandex_button.setObjectName("yandex_button")
@@ -38,7 +39,7 @@ class Ui_Form(object):
 "border-radius: 1px;")
         self.google_button.setText("")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap(PLUGIN_ICONS[2]), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon2.addPixmap(QtGui.QPixmap('images/google_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.google_button.setIcon(icon2)
         self.google_button.setIconSize(QtCore.QSize(64, 64))
         self.google_button.setObjectName("google_button")
@@ -71,7 +72,7 @@ class Ui_Form(object):
 "border-radius: 1px;")
         self.license_button.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap(PLUGIN_ICONS[3]), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap('images/license_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.license_button.setIcon(icon3)
         self.license_button.setObjectName("license_button")
         self.horizontalLayout.addWidget(self.license_button)
@@ -81,7 +82,7 @@ class Ui_Form(object):
 "border-radius: 1px;")
         self.question_button.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap(PLUGIN_ICONS[4]), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon4.addPixmap(QtGui.QPixmap('images/question_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.question_button.setIcon(icon4)
         self.question_button.setObjectName("question_button")
         self.horizontalLayout.addWidget(self.question_button)

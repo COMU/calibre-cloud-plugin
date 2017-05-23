@@ -45,21 +45,11 @@ class MainWindowForm(QWidget, ErrorMainWindow):
         self.setupUi(self)
         self.setWindowFlags(Qt.Window)
         self.move(QDesktopWidget().availableGeometry().center() - self.frameGeometry().center())
-#       self.install_button.clicked.connect(self.install_buttonn)
+
     def error_dialog(self):
         self.errorMainWindow = ErrorMainWindow()
         self.hide()
         self.errorMainWindow.exec_()
         self.show()
 
-#    def install_buttonn(self):
-#        try:
-#            os.system('pip install pydrive --user')
-#            os.system('pip install webdavclient --user')
-#            os.system('sudo apt-get install -y libcurl4-openssl-dev python-pycurl libxml2-dev libxslt-dev python-dev')
-#            QMessageBox.information(self, "Error", _("Succesfull, please restart Calibre!"))   
-#        except:
-#            QMessageBox.information(self, "Error", _("Error try to manuel install!")) 
-#            pass
-        
 

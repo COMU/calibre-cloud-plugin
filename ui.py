@@ -13,14 +13,12 @@ if False:
 # The class that all interface action plugins must inherit from
 from calibre.gui2.actions import InterfaceAction
 
-#try:
-from calibre_plugins.cloud_sync.main import DemoDialog, MainWindowForm
-#except:
-#    from calibre_plugins.cloud_sync.emain import DemoDialog, MainWindowForm
+try:
+    from calibre_plugins.cloud_sync.main import DemoDialog, MainWindowForm
+except:
+    from calibre_plugins.cloud_sync.emain import DemoDialog, MainWindowForm
 
 
-
-PLUGIN_ICONS = ['images/icon.png', 'images/yandex_icon.png', 'images/google_icon.png', 'images/license_icon.png', 'images/question_icon.png']
 class InterfacePlugin(InterfaceAction):
 
     name = 'Cloud Sync'
@@ -28,7 +26,7 @@ class InterfacePlugin(InterfaceAction):
             'Cloud Sync', 'Ctrl+Shift+F1')
 
     def genesis(self):
-        icon = get_icons(PLUGIN_ICONS[0])
+        icon = get_icons('images/icon.png')
         self.qaction.setIcon(icon)
         self.qaction.triggered.connect(self.show_dialog)
 
