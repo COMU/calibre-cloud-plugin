@@ -7,7 +7,7 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
+PLUGIN_ICONS = ['../images/icon.png']
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -22,7 +22,7 @@ class Ui_Dialog(object):
         font.setWeight(75)
         Dialog.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("../../media/kerim/TuTRLe/2017ubuntu/calibreGUi/calibre-cloud-plugin/images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap(PLUGIN_ICONS[0]), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         Dialog.setWindowIcon(icon)
         self.uploadButton = QtWidgets.QPushButton(Dialog)
         self.uploadButton.setGeometry(QtCore.QRect(170, 110, 99, 71))
