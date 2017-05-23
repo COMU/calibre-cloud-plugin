@@ -6,7 +6,7 @@ from __future__ import (unicode_literals, division, absolute_import,
 __license__   = 'GPL v3'
 __copyright__ = '2017, Kerim Ölçer <kerimlcr@gmail.com>, Ali Güven Odabaşıoğlu <agaodabasioglu@gmail.com>'
 __docformat__ = 'restructuredtext en'
-__version__   = "0.0.2"
+__version__   = "0.0.3"
 
 if False:
     get_icons = get_resources = None
