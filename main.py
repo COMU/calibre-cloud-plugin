@@ -352,7 +352,7 @@ class MainWindowForm(QWidget, MainWindow):
         self.google_button.clicked.connect(self.google_dialog)
         self.question_button.clicked.connect(self.about)
         self.license_button.clicked.connect(self.openUrl)
-
+        
     def openUrl(self):
         url = QtCore.QUrl('https://www.gnu.org/licenses/gpl-3.0.html')
         if not QtGui.QDesktopServices.openUrl(url):

@@ -26,7 +26,7 @@ class Ui_Form(object):
         self.yandex_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
-        self.yandex_button.setText("")
+        self.yandex_button.setText("Yandex")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap('images/yandex_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.yandex_button.setIcon(icon1)
@@ -37,7 +37,7 @@ class Ui_Form(object):
         self.google_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
-        self.google_button.setText("")
+        self.google_button.setText("Google")
         icon2 = QtGui.QIcon()
         icon2.addPixmap(QtGui.QPixmap('images/google_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.google_button.setIcon(icon2)
@@ -70,7 +70,7 @@ class Ui_Form(object):
         self.license_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
-        self.license_button.setText("")
+        self.license_button.setText("L")
         icon3 = QtGui.QIcon()
         icon3.addPixmap(QtGui.QPixmap('images/license_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.license_button.setIcon(icon3)
@@ -80,7 +80,7 @@ class Ui_Form(object):
         self.question_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
-        self.question_button.setText("")
+        self.question_button.setText("A")
         icon4 = QtGui.QIcon()
         icon4.addPixmap(QtGui.QPixmap('images/question_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.question_button.setIcon(icon4)
