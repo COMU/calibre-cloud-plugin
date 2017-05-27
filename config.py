@@ -15,8 +15,11 @@ from calibre.utils.config import config_dir
 prefs = JSONConfig('plugins/cloud_sync')
 prefs.defaults['username'] = 'username'
 prefs.defaults['password'] = 'password'
+prefs.defaults['d_username'] = 'username'
+prefs.defaults['d_password'] = 'password'
 prefs.defaults['librarypath'] = ''
 prefs.defaults['yy'] = '0'
+prefs.defaults['dd'] = '0'
 
 # Set defaults
 books_path = config_dir + '/global.py'

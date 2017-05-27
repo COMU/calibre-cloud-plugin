@@ -28,6 +28,7 @@ from calibre.utils.config import config_dir
 #Gui import
 from calibre_plugins.cloud_sync.gui.MainWindow import Ui_Form as MainWindow
 from calibre_plugins.cloud_sync.gui.yandex import Ui_Dialog as YandexMainWindow
+from calibre_plugins.cloud_sync.gui.dropbox import Ui_Dialog as DropboxMainWindow
 from calibre_plugins.cloud_sync.gui.google import Ui_Dialog as GoogleMainWindow
 from calibre_plugins.cloud_sync.gui.error import Ui_Dialog as ErrorMainWindow
 from calibre_plugins.cloud_sync.gui.about import Ui_Dialog as AboutMainWindow
@@ -145,6 +146,106 @@ class YandexMainWindowForm(QDialog,YandexMainWindow):
         self.yandexDisk("push")
         return 1
     
+class DropboxMainWindowForm(QDialog, DropboxMainWindow):
+    def __init__(self, parent = None):
+        QDialog.__init__(self, parent)
+        self.setupUi(self)
+        self.setWindowFlags(Qt.Window)
+
+        if (prefs['dd'] == '1'):
+            self.getUsername.hide()
+            self.getPassword.hide()
+            self.label_2.hide()
+            self.logout_button.clicked.connect(self.logout)
+
+        if (prefs['dd'] == '0'):
+            self.logout_button.hide()
+            self.getUsername.show()
+            self.getPassword.show()
+            self.label_2.show()
+            self.getUsername.setText(prefs['d_username'])
+            self.getPassword.setEchoMode(QLineEdit.Password)
+            self.getPassword.setText(prefs['d_password'])
+
+        self.downloadButton.clicked.connect(self.download)
+        self.uploadButton.clicked.connect(self.upload)
+        self.pushButton.clicked.connect(self.push)
+        self.pullButton.clicked.connect(self.pull)
+
+    def logout(self):
+        prefs['d_username'] = 'username'
+        prefs['d_password'] = 'password'
+        prefs['dd'] = '0'
+        QMessageBox.information(self, "Info", _("Logout successful"))
+        return 1
+
+    def save(self):
+        prefs['d_password'] = self.getPassword.text()
+        prefs['d_username'] = self.getUsername.text()
+        prefs['dd'] = '1'
+        return 1
+
+    def dropbox(self, choice):
+        options = {
+            'webdav_hostname': 'https://dav.dropdav.com',
+            'webdav_login'   : prefs['d_username'],
+            'webdav_password': prefs['d_password']
+        }
+        client = wc.Client(options)
+
+        if (client.check() == False):
+            QMessageBox.information(self, "Info", _("Login information is incorrect!"))
+            return 1
+
+        if (choice == "download"):
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
+                QMessageBox.information(self, "Info", _(
+                        "It was created because there is no Calibre file in Drive, download could not be done."))
+            else:
+                client.download_sync(remote_path="Calibre", local_path=prefs['librarypath'])
+                QMessageBox.information(self, "Info", _("Download complete."))
+        elif (choice == "upload"):
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
+            client.upload_sync(remote_path="Calibre", local_path=prefs['librarypath'])
+            QMessageBox.information(self, "Info", _("Upload complete."))
+        elif (choice == "pull"):
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
+                QMessageBox.information(self, "Info", _(
+                        "It was created because there is no Calibre file in Drive, pull could not be done."))
+            else:
+                client.pull(remote_directory="Calibre", local_directory=prefs['librarypath'])
+                QMessageBox.information(self, "Info", _("Pull complete."))
+        elif (choice == "push"):
+            if (client.check('Calibre') == False):
+                client.mkdir('Calibre')
+            client.push(remote_directory="Calibre", local_directory=prefs['librarypath'])
+            QMessageBox.information(self, "Info", _("Push complete."))
+        else:
+            return 1
+
+    def download(self):
+        self.save()
+        self.dropbox("download")
+        return 1
+
+    def upload(self):
+        self.save()
+        self.dropbox("upload")
+        return 1
+
+    def pull(self):
+        self.save()
+        self.dropbox("pull")
+        return 1
+
+    def push(self):
+         self.save()
+         self.dropbox("push")
+         return 1
+
 
 class GoogleMainWindowForm(QDialog,GoogleMainWindow):
 
@@ -350,6 +451,7 @@ class MainWindowForm(QWidget, MainWindow):
         self.label_version.setText(__version__)
         self.yandex_button.clicked.connect(self.yandex_dialog)
         self.google_button.clicked.connect(self.google_dialog)
+        self.dropbox_button.clicked.connect(self.dropbox_dialog)
         self.question_button.clicked.connect(self.about)
         self.license_button.clicked.connect(self.openUrl)
         
@@ -374,4 +476,10 @@ class MainWindowForm(QWidget, MainWindow):
         self.googleMainWindow = GoogleMainWindowForm()
         self.hide()
         self.googleMainWindow.exec_()
+        self.show()
+
+    def dropbox_dialog(self):
+        self.dropboxMainWindow = DropboxMainWindowForm()
+        self.hide()
+        self.dropboxMainWindow.exec_()
         self.show()

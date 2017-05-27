@@ -49,7 +49,7 @@ class Ui_Dialog(object):
         self.pushButton.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
-        self.pushButton.setText("")
+        self.pushButton.setText("<")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap("images/bs_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.pushButton.setIcon(icon1)
@@ -62,7 +62,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Google"))
         self.uploadButton.setText(_translate("Dialog", "Upload"))
         self.downloadButton.setText(_translate("Dialog", "Download"))
         self.googleAuthButton.setText(_translate("Dialog", "Auth"))

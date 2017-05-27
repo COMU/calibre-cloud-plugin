@@ -8,7 +8,6 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 class Ui_Form(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
@@ -19,27 +18,27 @@ class Ui_Form(object):
         font.setPointSize(12)
         Dialog.setFont(font)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap('images/icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon.addPixmap(QtGui.QPixmap("images/icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         Dialog.setWindowIcon(icon)
         self.yandex_button = QtWidgets.QPushButton(Dialog)
-        self.yandex_button.setGeometry(QtCore.QRect(80, 90, 68, 64))
+        self.yandex_button.setGeometry(QtCore.QRect(40, 90, 68, 64))
         self.yandex_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
         self.yandex_button.setText("Yandex")
         icon1 = QtGui.QIcon()
-        icon1.addPixmap(QtGui.QPixmap('images/yandex_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon1.addPixmap(QtGui.QPixmap("images/yandex_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.yandex_button.setIcon(icon1)
         self.yandex_button.setIconSize(QtCore.QSize(64, 64))
         self.yandex_button.setObjectName("yandex_button")
         self.google_button = QtWidgets.QPushButton(Dialog)
-        self.google_button.setGeometry(QtCore.QRect(150, 90, 68, 64))
+        self.google_button.setGeometry(QtCore.QRect(110, 90, 68, 64))
         self.google_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
         self.google_button.setText("Google")
         icon2 = QtGui.QIcon()
-        icon2.addPixmap(QtGui.QPixmap('images/google_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon2.addPixmap(QtGui.QPixmap("images/google_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.google_button.setIcon(icon2)
         self.google_button.setIconSize(QtCore.QSize(64, 64))
         self.google_button.setObjectName("google_button")
@@ -70,9 +69,9 @@ class Ui_Form(object):
         self.license_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
-        self.license_button.setText("L")
+        self.license_button.setText("")
         icon3 = QtGui.QIcon()
-        icon3.addPixmap(QtGui.QPixmap('images/license_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon3.addPixmap(QtGui.QPixmap("images/license_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.license_button.setIcon(icon3)
         self.license_button.setObjectName("license_button")
         self.horizontalLayout.addWidget(self.license_button)
@@ -80,21 +79,29 @@ class Ui_Form(object):
         self.question_button.setStyleSheet("border-color: black;\n"
 "border-width: 5px;\n"
 "border-radius: 1px;")
-        self.question_button.setText("A")
+        self.question_button.setText("")
         icon4 = QtGui.QIcon()
-        icon4.addPixmap(QtGui.QPixmap('images/question_icon.png'), QtGui.QIcon.Normal, QtGui.QIcon.On)
+        icon4.addPixmap(QtGui.QPixmap("images/question_icon.png"), QtGui.QIcon.Normal, QtGui.QIcon.On)
         self.question_button.setIcon(icon4)
         self.question_button.setObjectName("question_button")
         self.horizontalLayout.addWidget(self.question_button)
+        self.dropbox_button = QtWidgets.QPushButton(Dialog)
+        self.dropbox_button.setGeometry(QtCore.QRect(180, 90, 68, 64))
+        self.dropbox_button.setStyleSheet("border-color: black;\n"
+"border-width: 5px;\n"
+"border-radius: 1px;")
+        self.dropbox_button.setIconSize(QtCore.QSize(64, 64))
+        self.dropbox_button.setObjectName("dropbox_button")
 
         self.retranslateUi(Dialog)
         QtCore.QMetaObject.connectSlotsByName(Dialog)
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", " "))
+        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.label_appname.setText(_translate("Dialog", "Cloud Plugin"))
         self.label_version.setText(_translate("Dialog", "version"))
+        self.dropbox_button.setText(_translate("Dialog", "Dropbox"))
 
 
 if __name__ == "__main__":

@@ -101,7 +101,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
+        Dialog.setWindowTitle(_translate("Dialog", "Yandex"))
         self.downloadButton.setText(_translate("Dialog", "Download"))
         self.pullButton.setText(_translate("Dialog", "Pull"))
         self.uploadButton.setText(_translate("Dialog", "Upload"))
