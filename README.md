@@ -1,7 +1,7 @@
 # calibre-cloud-plugin
 Calibre plugin for cloud strorages
 
-There are 4 buttons for Yandex.
+There are 4 buttons for Yandex and Dropbox.
 
 * Dowload(When files deleted on site and local automaticly delete as well )
 * Upload(When files deleted on local and other site automaticly delete as well) 
